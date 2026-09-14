@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Campus Buddy</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #222;
+        }
+
+        /* HEADER */
+        header {
+            background: white;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #5b5ce2;
+        }
+
+        .profile {
+            background: #eeeeff;
+            padding: 10px 16px;
+            border-radius: 20px;
+        }
+
+        /* MAIN */
+        .container {
+            padding: 30px 40px;
+        }
+
+        .welcome {
+            margin-bottom: 25px;
+        }
+
+        .welcome h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            color: #666;
+        }
+
+        /* GRID */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .card h2 {
+            margin-bottom: 18px;
+            font-size: 20px;
+        }
+
+        /* CHATBOX */
+        .chatbox {
+            height: 260px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .chat-message {
+            background: #f0f0ff;
+            padding: 14px;
+            border-radius: 12px;
+            width: fit-content;
+            max-width: 80%;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+        .chat-input button {
+            background: #5b5ce2;
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        /* TIMETABLE */
+        .class {
+            display: flex;
+            justify-content: space-between;
+            padding: 13px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .class:last-child {
+            border-bottom: none;
+        }
+
+        .time {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* CALENDAR */
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            text-align: center;
+        }
+
+        .calendar div {
+            padding: 9px;
+            border-radius: 8px;
+        }
+
+        .day {
+            font-weight: bold;
+            color: #777;
+        }
+
+        .today {
+            background: #5b5ce2;
+            color: white;
+        }
+
+        /* OTHER FEATURES */
+        .features {
+            margin-top: 25px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .feature {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .feature-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            color: #777;
+            font-size: 14px;
+            margin-top: 6px;
+        }
+
+        @media (max-width: 800px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            header {
+                padding: 15px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">Campus <span>Buddy</span> 🎓</div>
+        <div class="profile">👤 Student</div>
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="container">
+
+        <div class="welcome">
+            <h1>Good Morning! 👋</h1>
+            <p>Here's what's happening on campus today.</p>
+        </div>
+
+
+        <!-- MAIN DASHBOARD -->
+        <div class="dashboard">
+
+            <!-- AI CHATBOX -->
+            <div class="card chatbox">
+
+                <div>
+                    <h2>🤖 Ask Campus Buddy</h2>
+
+                    <div class="chat-message">
+                        Hi! I'm your Campus Buddy. Ask me anything about your campus.
+                    </div>
+                </div>
+
+                <div class="chat-input">
+                    <input type="text" placeholder="Ask something...">
+                    <button>Send</button>
+                </div>
+
+            </div>
+
+
+            <!-- TODAY'S TIMETABLE -->
+            <div class="card">
+
+                <h2>📚 Today's Schedule</h2>
+
+                <div class="class">
+                    <div>
+                        <b>Mathematics</b>
+                        <div class="time">Room 204</div>
+                    </div>
+                    <div class="time">9:00 AM</div>
+                </div>
+
+                <div class="class">
+                    <div>
+                        <b>Programming</b>
+                        <div class="time">Lab 2</div>
+                    </div>
+                    <div class="time">11:00 AM</div>
+                </div>
+
+                <div class="class">
+                    <div>
+                        <b>Physics</b>
+                        <div class="time">Room 301</div>
+                    </div>
+                    <div class="time">1:00 PM</div>
+                </div>
+
+                <div class="class">
+                    <div>
+                        <b>AI Workshop</b>
+                        <div class="time">Auditorium</div>
+                    </div>
+                    <div class="time">3:00 PM</div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CALENDAR -->
+        <div class="card" style="margin-top:25px;">
+
+            <h2>📅 Calendar</h2>
+
+            <div class="calendar">
+
+                <div class="day">Mon</div>
+                <div class="day">Tue</div>
+                <div class="day">Wed</div>
+                <div class="day">Thu</div>
+                <div class="day">Fri</div>
+                <div class="day">Sat</div>
+                <div class="day">Sun</div>
+
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>5</div>
+                <div>6</div>
+                <div>7</div>
+
+                <div>8</div>
+                <div>9</div>
+                <div>10</div>
+                <div class="today">11</div>
+                <div>12</div>
+                <div>13</div>
+                <div>14</div>
+
+                <div>15</div>
+                <div>16</div>
+                <div>17</div>
+                <div>18</div>
+                <div>19</div>
+                <div>20</div>
+                <div>21</div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FUTURE FEATURES -->
+        <div class="features">
+
+            <div class="feature">
+                <div class="feature-icon">📢</div>
+                <b>Important Notices</b>
+                <p>Stay updated with important announcements.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">⏰</div>
+                <b>Deadlines</b>
+                <p>Never miss an important deadline.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">🏫</div>
+                <b>Campus Map</b>
+                <p>Find classrooms and campus locations.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature-icon">👥</div>
+                <b>Campus Directory</b>
+                <p>Find faculty and important contacts.</p>
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+</html>
