@@ -1,714 +1,1438 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Campus Buddy</title>
+<title>Campus Buddy</title>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+<style>
 
-        body {
-            background: #f5f6fb;
-            color: #222;
-        }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-        /* HEADER */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f1e9;
+    color: #0b3029;
+    display: flex;
+    min-height: 100vh;
+}
 
-        header {
-            background: white;
-            padding: 18px 45px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #e5e5e5;
-        }
+/*  SIDEBAR  */
 
-        .logo {
-            font-size: 27px;
-            font-weight: bold;
-        }
+.sidebar {
+    width: 270px;
+    background: #07352e;
+    color: white;
+    min-height: 100vh;
+    padding: 28px 20px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
 
-        .logo span {
-            color: #5b5ce2;
-        }
+.logo {
+    font-size: 27px;
+    font-weight: 800;
+    margin-bottom: 5px;
+}
 
-        .profile {
-            background: #eeeeff;
-            padding: 10px 18px;
-            border-radius: 25px;
-            font-size: 14px;
-        }
+.tagline {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #b8d4c8;
+    margin-bottom: 45px;
+}
 
+.nav-item {
+    padding: 15px 18px;
+    margin: 7px 0;
+    border-radius: 13px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #d6e5df;
+    transition: 0.2s;
+}
 
-        /*  MAIN  */
+.nav-item:hover {
+    background: #17483f;
+}
 
-        .container {
-            padding: 35px 45px;
-            max-width: 1500px;
-            margin: auto;
-        }
+.nav-item.active {
+    background: #a8ff4f;
+    color: #07352e;
+}
 
-        .welcome {
-            margin-bottom: 30px;
-        }
+/* Upload notice box */
 
-        .welcome h1 {
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
+.notice-box {
+    position: absolute;
+    bottom: 100px;
+    left: 20px;
+    right: 20px;
+    background: #17483f;
+    padding: 18px;
+    border-radius: 16px;
+    border: 1px solid #326359;
+}
 
-        .welcome p {
-            color: #707070;
-            font-size: 16px;
-        }
+.notice-box p {
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
 
+.green-button {
+    width: 100%;
+    padding: 11px;
+    border: none;
+    border-radius: 10px;
+    background: #a8ff4f;
+    color: #07352e;
+    font-weight: bold;
+    cursor: pointer;
+}
 
-        /* MAIN GRID */
+.profile {
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
+    font-size: 13px;
+}
 
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 25px;
-        }
+/*  MAIN  */
 
-        .card {
-            background: white;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-        }
+.main {
+    margin-left: 270px;
+    padding: 38px;
+    width: calc(100% - 270px);
+}
 
-        .card-title {
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
+.page {
+    display: none;
+}
 
+.page.active {
+    display: block;
+}
 
-        /*  AI CHAT */
+/* Header */
 
-        .chat-card {
-            min-height: 330px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
 
-        .chat-message {
-            background: #f0f0ff;
-            padding: 16px;
-            border-radius: 14px;
-            max-width: 85%;
-            line-height: 1.5;
-            color: #333;
-        }
+.small-heading {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #648078;
+    margin-bottom: 8px;
+}
 
-        .chat-input {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
+h1 {
+    font-size: 48px;
+    line-height: 1;
+    letter-spacing: -2px;
+}
 
-        .chat-input input {
-            flex: 1;
-            padding: 14px;
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            outline: none;
-            font-size: 14px;
-        }
+h1 span {
+    font-style: italic;
+    font-family: Georgia, serif;
+}
 
-        .chat-input button {
-            background: #5b5ce2;
-            color: white;
-            border: none;
-            padding: 14px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-        }
+.date-display {
+    font-size: 14px;
+    color: #526a63;
+}
 
+/*  ALERT  */
 
-        /*  CALENDAR */
+.alert {
+    background: #ff7545;
+    color: white;
+    padding: 16px 22px;
+    border-radius: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    font-weight: bold;
+}
 
-        .calendar-card {
-            min-height: 330px;
-        }
+/*  GRID  */
 
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 25px;
+}
 
-        .calendar-header h3 {
-            font-size: 18px;
-        }
+/*  HERO  */
 
-        .calendar {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 7px;
-            text-align: center;
-        }
+.hero {
+    background: #07352e;
+    color: white;
+    border-radius: 28px;
+    padding: 35px;
+    min-height: 330px;
+    position: relative;
+    overflow: hidden;
+}
 
-        .calendar div {
-            padding: 9px 4px;
-            border-radius: 8px;
-            font-size: 14px;
-        }
+.hero::after {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border: 1px solid #86c77d;
+    border-radius: 50%;
+    right: -100px;
+    bottom: -120px;
+}
 
-        .calendar .day-name {
-            font-weight: bold;
-            color: #777;
-            font-size: 12px;
-        }
+.hero-label {
+    color: #a8ff4f;
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 22px;
+}
 
-        .calendar .today {
-            background: #5b5ce2;
-            color: white;
-            font-weight: bold;
-        }
+.hero h2 {
+    font-size: 42px;
+    max-width: 650px;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 18px;
+}
 
+.hero p {
+    color: #bdd1ca;
+    max-width: 570px;
+    line-height: 1.6;
+}
 
-        /*  TIMETABLE  */
+/*  CALENDAR CARD  */
 
-        .schedule-card {
-            margin-top: 25px;
-        }
+.calendar-card {
+    background: #fffdf9;
+    border: 1px solid #ddd9d0;
+    border-radius: 25px;
+    padding: 25px;
+}
 
-        .schedule-empty {
-            background: #f8f8fc;
-            border: 2px dashed #d7d7e5;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-        }
+.calendar-card h3 {
+    margin-bottom: 15px;
+}
 
-        .schedule-empty .icon {
-            font-size: 40px;
-            margin-bottom: 10px;
-        }
+.big-date {
+    font-size: 68px;
+    font-weight: bold;
+    margin: 15px 0 0;
+}
 
-        .schedule-empty h3 {
-            margin-bottom: 8px;
-        }
+.day-name {
+    color: #677c75;
+}
 
-        .schedule-empty p {
-            color: #777;
-            margin-bottom: 18px;
-        }
+/*  LOWER CARDS  */
 
-        .upload-button {
-            background: #5b5ce2;
-            color: white;
-            border: none;
-            padding: 12px 22px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 14px;
-        }
+.section-title {
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
 
-        #timetableFile {
-            display: none;
-        }
+.section-title h2 {
+    font-size: 28px;
+}
 
+.section-title p {
+    color: #6a7d77;
+    margin-top: 5px;
+}
 
-        /*  OTHER FEATURES */
+.cards {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 25px;
+}
 
-        .features {
-            margin-top: 25px;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-        }
+.card {
+    background: #fffdf9;
+    border: 1px solid #ddd9d0;
+    border-radius: 24px;
+    padding: 25px;
+}
 
-        .feature {
-            background: white;
-            padding: 22px;
-            border-radius: 18px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-        }
+/*  TIMETABLE  */
 
-        .feature-icon {
-            font-size: 32px;
-            margin-bottom: 12px;
-        }
+.timetable-empty {
+    text-align: center;
+    padding: 35px 20px;
+}
 
-        .feature h3 {
-            font-size: 16px;
-            margin-bottom: 7px;
-        }
+.timetable-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
 
-        .feature p {
-            color: #777;
-            font-size: 13px;
-            line-height: 1.4;
-        }
+.timetable-empty h3 {
+    margin-bottom: 8px;
+}
 
+.timetable-empty p {
+    color: #73827d;
+    margin-bottom: 20px;
+}
 
-        /*  RESPONSIVE  */
+.upload-btn {
+    background: #07352e;
+    color: white;
+    border: none;
+    padding: 13px 22px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
 
-        @media (max-width: 900px) {
+/*  CHAT  */
 
-            .main-grid {
-                grid-template-columns: 1fr;
-            }
+.chat-card {
+    background: #b8ff78;
+    border-radius: 24px;
+    padding: 25px;
+}
 
-            .features {
-                grid-template-columns: repeat(2, 1fr);
-            }
+.chat-card h3 {
+    font-size: 25px;
+    margin-bottom: 8px;
+}
 
-            .container {
-                padding: 25px;
-            }
+.chat-card p {
+    color: #315a48;
+    font-size: 14px;
+    margin-bottom: 18px;
+}
 
-            header {
-                padding: 15px 25px;
-            }
-        }
+.chat-box {
+    background: white;
+    border-radius: 15px;
+    padding: 10px;
+    display: flex;
+    gap: 8px;
+}
 
-        @media (max-width: 550px) {
+.chat-box input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 10px;
+}
 
-            .features {
-                grid-template-columns: 1fr;
-            }
+.chat-box button {
+    border: none;
+    background: #07352e;
+    color: white;
+    border-radius: 9px;
+    padding: 10px 15px;
+    cursor: pointer;
+}
 
-            .welcome h1 {
-                font-size: 26px;
-            }
-        }
+.chat-response {
+    background: white;
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 12px;
+    display: none;
+    font-size: 14px;
+}
 
-    </style>
+/*  NOTICE FEED  */
+
+.notice-list {
+    background: #fffdf9;
+    border: 1px solid #ddd9d0;
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.notice-item {
+    padding: 20px 25px;
+    border-bottom: 1px solid #e4e0d8;
+    display: flex;
+    justify-content: space-between;
+}
+
+.notice-item:last-child {
+    border-bottom: none;
+}
+
+.notice-item h3 {
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+.notice-item p {
+    color: #73827d;
+    font-size: 13px;
+}
+
+.notice-date {
+    color: #e65f38;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/*  CALENDAR PAGE  */
+
+.full-calendar {
+    background: #fffdf9;
+    border: 1px solid #ddd9d0;
+    border-radius: 25px;
+    padding: 25px;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+}
+
+.calendar-day-name {
+    text-align: center;
+    font-size: 12px;
+    color: #74817c;
+    padding: 10px;
+}
+
+.calendar-date {
+    min-height: 70px;
+    background: #faf8f3;
+    border: 1px solid #e1ddd5;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.calendar-date.today {
+    background: #ff7545;
+    color: white;
+    border-color: #ff7545;
+}
+
+.calendar-date.empty {
+    background: transparent;
+    border: none;
+}
+
+/*  MAP  */
+
+.map-box {
+    height: 450px;
+    background: #12645a;
+    border-radius: 25px;
+    position: relative;
+    overflow: hidden;
+    padding: 30px;
+    color: white;
+}
+
+.map-box::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.25;
+    background-image:
+        linear-gradient(45deg, transparent 45%, #9ddd82 46%, transparent 47%),
+        linear-gradient(-45deg, transparent 45%, #9ddd82 46%, transparent 47%);
+    background-size: 70px 70px;
+}
+
+.map-content {
+    position: relative;
+    z-index: 2;
+}
+
+.route {
+    position: absolute;
+    width: 65%;
+    height: 100px;
+    border-top: 5px dashed #a8ff4f;
+    border-radius: 50%;
+    top: 45%;
+    left: 18%;
+    transform: rotate(-10deg);
+}
+
+.location {
+    position: absolute;
+    background: #ff7545;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+}
+
+.start {
+    left: 20%;
+    top: 50%;
+}
+
+.end {
+    right: 18%;
+    top: 30%;
+    background: #a8ff4f;
+}
+
+/*  RESPONSIVE  */
+
+@media(max-width: 900px) {
+
+    .sidebar {
+        width: 210px;
+    }
+
+    .main {
+        margin-left: 210px;
+        width: calc(100% - 210px);
+        padding: 25px;
+    }
+
+    .dashboard-grid,
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    h1 {
+        font-size: 38px;
+    }
+}
+
+@media(max-width: 650px) {
+
+    body {
+        display: block;
+    }
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        min-height: auto;
+    }
+
+    .notice-box,
+    .profile {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        right: auto;
+        margin-top: 20px;
+    }
+
+    .main {
+        margin-left: 0;
+        width: 100%;
+        padding: 20px;
+    }
+
+    .calendar-grid {
+        gap: 5px;
+    }
+
+    .calendar-date {
+        min-height: 50px;
+        padding: 8px;
+    }
+}
+
+</style>
 </head>
-
 
 <body>
 
+<!--  SIDEBAR  -->
 
-    <!--  HEADER  -->
+<aside class="sidebar">
 
-    <header>
+    <div class="logo">✦ Campus Buddy</div>
 
-        <div class="logo">
-            Campus <span>Buddy</span> 🎓
-        </div>
+    <div class="tagline">
+        YOUR CAMPUS, IN SYNC
+    </div>
 
-        <div class="profile">
-            👤 Student
-        </div>
+    <div class="nav-item active" onclick="showPage('today', this)">
+        ◇ &nbsp; Today
+    </div>
 
-    </header>
+    <div class="nav-item" onclick="showPage('notices', this)">
+        ▣ &nbsp; Notice Feed
+    </div>
+
+    <div class="nav-item" onclick="showPage('calendar', this)">
+        □ &nbsp; Calendar
+    </div>
+
+    <div class="nav-item" onclick="showPage('map', this)">
+        ⌖ &nbsp; Campus Map
+    </div>
+
+    <div class="nav-item">
+        ◎ &nbsp; My Preferences
+    </div>
+
+    <div class="notice-box">
+
+        <p>
+            Have a notice from WhatsApp?
+            Upload it here and let Campus Buddy
+            make it useful.
+        </p>
+
+        <button class="green-button"
+                onclick="analyzeNotice()">
+            + Analyze a notice
+        </button>
+
+    </div>
+
+    <div class="profile">
+        👤 Student
+        <br>
+        <span style="color:#a8c4bb;">Campus Buddy User</span>
+    </div>
+
+</aside>
 
 
+<!--  MAIN  -->
 
-    <!-- MAIN CONTENT -->
-
-    <main class="container">
+<main class="main">
 
 
-        <!-- WELCOME -->
+<!--  -->
+<!-- TODAY PAGE -->
+<!--  -->
 
-        <div class="welcome">
+<section id="today" class="page active">
 
-            <h1 id="greeting">
-                Good Morning! 👋
+    <div class="top-header">
+
+        <div>
+            <div class="small-heading" id="greeting">
+                GOOD MORNING
+            </div>
+
+            <h1>
+                Your campus,
+                <span>simplified.</span>
             </h1>
+        </div>
 
-            <p id="currentDate">
-                Loading date...
+        <div class="date-display" id="currentDate">
+        </div>
+
+    </div>
+
+
+    <div class="alert">
+
+        <span>✦ Campus Buddy keeps important information close.</span>
+
+        <span>Explore →</span>
+
+    </div>
+
+
+    <div class="dashboard-grid">
+
+
+        <!-- HERO -->
+
+        <div class="hero">
+
+            <div class="hero-label">
+                YOUR CAMPUS COMPANION
+            </div>
+
+            <h2>
+                Stop searching.
+                Start knowing.
+            </h2>
+
+            <p>
+                Campus Buddy brings your notices, deadlines,
+                timetable and important campus information
+                together in one simple place.
             </p>
 
         </div>
 
 
+        <!-- CALENDAR CARD -->
 
-        <!--  CHAT + CALENDAR  -->
+        <div class="calendar-card">
 
-        <div class="main-grid">
+            <h3>On your calendar</h3>
 
-
-            <!-- AI CHATBOX -->
-
-            <div class="card chat-card">
-
-                <div>
-
-                    <h2 class="card-title">
-                        🤖 Ask Campus Buddy
-                    </h2>
-
-                    <div class="chat-message">
-
-                        Hi! I'm your Campus Buddy 👋
-                        <br>
-                        Ask me anything about your campus.
-
-                    </div>
-
-                </div>
-
-
-                <div class="chat-input">
-
-                    <input
-                        type="text"
-                        placeholder="Ask something about your campus..."
-                    >
-
-                    <button>
-                        Send
-                    </button>
-
-                </div>
-
+            <div class="small-heading" id="monthName">
+                MONTH
             </div>
 
+            <div class="big-date" id="bigDate">
+                14
+            </div>
 
-
-            <!-- CALENDAR -->
-
-            <div class="card calendar-card">
-
-                <div class="calendar-header">
-
-                    <h2 class="card-title" id="calendarTitle">
-                        📅 Calendar
-                    </h2>
-
-                </div>
-
-                <div class="calendar" id="calendar">
-
-                    <!-- JavaScript will create the calendar here -->
-
-                </div>
-
+            <div class="day-name" id="dayName">
+                Tuesday
             </div>
 
         </div>
 
+    </div>
 
 
-        <!--  TODAY'S SCHEDULE  -->
+    <!-- LOWER SECTION -->
 
-        <div class="card schedule-card">
+    <div class="section-title">
 
-            <h2 class="card-title">
-                📚 Today's Schedule
-            </h2>
+        <h2>
+            Today's <span style="font-family:Georgia;font-style:italic;">
+            essentials.
+            </span>
+        </h2>
+
+        <p>
+            Everything you need for your day, in one place.
+        </p>
+
+    </div>
 
 
-            <div class="schedule-empty">
+    <div class="cards">
 
-                <div class="icon">
-                    📋
+
+        <!-- TIMETABLE -->
+
+        <div class="card">
+
+            <h3>Today's timetable</h3>
+
+            <div class="timetable-empty">
+
+                <div class="timetable-icon">
+                    📅
                 </div>
 
-                <h3>
-                    No timetable uploaded yet
-                </h3>
+                <h3>No timetable uploaded yet</h3>
 
                 <p>
-                    Upload your timetable to see your classes and events for today.
+                    Upload your timetable and Campus Buddy
+                    will organize today's classes for you.
                 </p>
-
-
-                <label for="timetableFile" class="upload-button">
-                    + Upload Timetable
-                </label>
 
                 <input
                     type="file"
-                    id="timetableFile"
+                    id="timetableInput"
                     accept=".pdf,.jpg,.jpeg,.png"
+                    hidden
+                    onchange="uploadTimetable()"
                 >
 
-            </div>
+                <button
+                    class="upload-btn"
+                    onclick="document.getElementById('timetableInput').click()">
 
-        </div>
+                    + Upload Timetable
 
-
-
-        <!-- OTHER FEATURES  -->
-
-        <div class="features">
-
-
-            <!-- NOTICES -->
-
-            <div class="feature">
-
-                <div class="feature-icon">
-                    📢
-                </div>
-
-                <h3>
-                    Important Notices
-                </h3>
-
-                <p>
-                    Stay updated with important campus announcements.
-                </p>
-
-            </div>
-
-
-
-            <!-- DEADLINES -->
-
-            <div class="feature">
-
-                <div class="feature-icon">
-                    ⏰
-                </div>
-
-                <h3>
-                    Deadlines
-                </h3>
-
-                <p>
-                    Keep track of important registrations and submissions.
-                </p>
-
-            </div>
-
-
-
-            <!-- CAMPUS MAP -->
-
-            <div class="feature">
-
-                <div class="feature-icon">
-                    🏫
-                </div>
-
-                <h3>
-                    Campus Map
-                </h3>
-
-                <p>
-                    Find classrooms, labs, halls and other campus locations.
-                </p>
-
-            </div>
-
-
-
-            <!-- DIRECTORY -->
-
-            <div class="feature">
-
-                <div class="feature-icon">
-                    👥
-                </div>
-
-                <h3>
-                    Campus Directory
-                </h3>
-
-                <p>
-                    Find faculty, departments and important contacts.
-                </p>
+                </button>
 
             </div>
 
         </div>
 
 
-    </main>
+        <!-- CHAT -->
+
+        <div class="chat-card">
+
+            <h3>Ask Campus Buddy</h3>
+
+            <p>
+                Need help finding information?
+                Ask your campus assistant.
+            </p>
+
+
+            <div class="chat-box">
+
+                <input
+                    type="text"
+                    id="chatInput"
+                    placeholder="Ask something..."
+                >
+
+                <button onclick="sendMessage()">
+                    →
+                </button>
+
+            </div>
+
+
+            <div id="chatResponse"
+                 class="chat-response">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- NOTICE PREVIEW -->
+
+    <div class="section-title">
+
+        <h2>Fresh campus information.</h2>
+
+        <p>
+            Important information without the noise.
+        </p>
+
+    </div>
+
+
+    <div class="notice-list">
+
+        <div class="notice-item">
+
+            <div>
+                <h3>Hackathon registration updates</h3>
+                <p>
+                    Student Activities · Relevant to students
+                </p>
+            </div>
+
+            <div class="notice-date">
+                NEW
+            </div>
+
+        </div>
+
+
+        <div class="notice-item">
+
+            <div>
+                <h3>Upcoming academic deadlines</h3>
+                <p>
+                    Academic · Check your department notices
+                </p>
+            </div>
+
+            <div class="notice-date">
+                SOON
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 
 
 
-    <!--  JAVASCRIPT  -->
+<!--  -->
+<!-- NOTICE PAGE -->
+<!--  -->
 
-    <script>
+<section id="notices" class="page">
 
-        /* 
-           CURRENT DATE & GREETING
-         */
+    <div class="top-header">
 
-        const today = new Date();
+        <div>
 
-        const hours = today.getHours();
+            <div class="small-heading">
+                SOURCE-FIRST CAMPUS BOARD
+            </div>
 
-        let greeting;
+            <h1>
+                The campus feed,
+                <span>de-noised.</span>
+            </h1>
 
-        if (hours >= 5 && hours < 12) {
+        </div>
 
-            greeting = "Good Morning! ☀️";
+        <button class="upload-btn"
+                onclick="analyzeNotice()">
 
-        } else if (hours >= 12 && hours < 17) {
+            ✦ Analyze notice
 
-            greeting = "Good Afternoon! 🌤️";
+        </button>
 
-        } else if (hours >= 17 && hours < 21) {
+    </div>
 
-            greeting = "Good Evening! 🌆";
 
-        } else {
+    <div class="notice-list">
 
-            greeting = "Good Night! 🌙";
+        <div class="notice-item">
+
+            <div>
+
+                <h3>
+                    Hackathon registrations are now open
+                </h3>
+
+                <p>
+                    Student Activities · Important student update
+                </p>
+
+            </div>
+
+            <div class="notice-date">
+                NEW
+            </div>
+
+        </div>
+
+
+        <div class="notice-item">
+
+            <div>
+
+                <h3>
+                    Internal assessment information
+                </h3>
+
+                <p>
+                    Academic · Department notice
+                </p>
+
+            </div>
+
+            <div class="notice-date">
+                SOON
+            </div>
+
+        </div>
+
+
+        <div class="notice-item">
+
+            <div>
+
+                <h3>
+                    Campus event announcement
+                </h3>
+
+                <p>
+                    Events · Open to students
+                </p>
+
+            </div>
+
+            <div class="notice-date">
+                EVENT
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!--  -->
+<!-- CALENDAR PAGE -->
+<!--  -->
+
+<section id="calendar" class="page">
+
+    <div class="top-header">
+
+        <div>
+
+            <div class="small-heading">
+                AUTO-ORGANISED
+            </div>
+
+            <h1>
+                Your calendar,
+                <span>uncluttered.</span>
+            </h1>
+
+        </div>
+
+    </div>
+
+
+    <div class="full-calendar">
+
+        <div class="calendar-header">
+
+            <h2 id="fullMonth">
+                September 2026
+            </h2>
+
+            <div>
+                TODAY
+            </div>
+
+        </div>
+
+
+        <div class="calendar-grid"
+             id="calendarGrid">
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!--  -->
+<!-- MAP PAGE -->
+<!--  -->
+
+<section id="map" class="page">
+
+    <div class="top-header">
+
+        <div>
+
+            <div class="small-heading">
+                CAMPUS NAVIGATION
+            </div>
+
+            <h1>
+                Find the room.
+                <span>Don't hunt for it.</span>
+            </h1>
+
+        </div>
+
+        <button class="upload-btn"
+                onclick="startRoute()">
+
+            ⌖ Start route
+
+        </button>
+
+    </div>
+
+
+    <div class="map-box">
+
+        <div class="map-content">
+
+            <h2>Campus route preview</h2>
+
+            <p style="margin-top:8px;">
+                Demo campus map
+            </p>
+
+        </div>
+
+        <div class="route"></div>
+
+        <div class="location start"></div>
+
+        <div class="location end"></div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+
+<!--  JAVASCRIPT  -->
+
+<script>
+
+
+/* 
+   PAGE NAVIGATION
+ */
+
+function showPage(pageId, clickedItem) {
+
+    document.querySelectorAll(".page").forEach(function(page) {
+
+        page.classList.remove("active");
+
+    });
+
+
+    document.getElementById(pageId).classList.add("active");
+
+
+    document.querySelectorAll(".nav-item").forEach(function(item) {
+
+        item.classList.remove("active");
+
+    });
+
+
+    clickedItem.classList.add("active");
+
+}
+
+
+
+/* 
+   CURRENT DATE
+ */
+
+const today = new Date();
+
+const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+];
+
+const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+];
+
+
+const currentMonth = today.getMonth();
+const currentYear = today.getFullYear();
+const currentDay = today.getDate();
+
+
+/* Greeting */
+
+const hour = today.getHours();
+
+let greetingText;
+
+if (hour < 12) {
+    greetingText = "GOOD MORNING";
+}
+else if (hour < 17) {
+    greetingText = "GOOD AFTERNOON";
+}
+else if (hour < 21) {
+    greetingText = "GOOD EVENING";
+}
+else {
+    greetingText = "GOOD NIGHT";
+}
+
+document.getElementById("greeting").textContent =
+    greetingText;
+
+
+/* Main date */
+
+document.getElementById("currentDate").textContent =
+    today.toLocaleDateString("en-IN", {
+        day: "numeric",
+        month: "short",
+        year: "numeric"
+    });
+
+
+document.getElementById("bigDate").textContent =
+    currentDay;
+
+document.getElementById("dayName").textContent =
+    days[today.getDay()];
+
+document.getElementById("monthName").textContent =
+    months[currentMonth] + " " + currentYear;
+
+
+/* 
+   DYNAMIC CALENDAR
+ */
+
+function generateCalendar() {
+
+    const calendar =
+        document.getElementById("calendarGrid");
+
+    calendar.innerHTML = "";
+
+
+    document.getElementById("fullMonth").textContent =
+        months[currentMonth] + " " + currentYear;
+
+
+    /* Day headings */
+
+    const dayNames = [
+        "MON",
+        "TUE",
+        "WED",
+        "THU",
+        "FRI",
+        "SAT",
+        "SUN"
+    ];
+
+
+    dayNames.forEach(function(day) {
+
+        const heading =
+            document.createElement("div");
+
+        heading.className =
+            "calendar-day-name";
+
+        heading.textContent =
+            day;
+
+        calendar.appendChild(heading);
+
+    });
+
+
+    /*
+       JavaScript starts Sunday = 0.
+       We convert it so Monday = 0.
+    */
+
+    let firstDay =
+        new Date(currentYear, currentMonth, 1).getDay();
+
+    firstDay =
+        (firstDay + 6) % 7;
+
+
+    /* Empty boxes */
+
+    for (let i = 0; i < firstDay; i++) {
+
+        const empty =
+            document.createElement("div");
+
+        empty.className =
+            "calendar-date empty";
+
+        calendar.appendChild(empty);
+
+    }
+
+
+    /* Number of days */
+
+    const numberOfDays =
+        new Date(
+            currentYear,
+            currentMonth + 1,
+            0
+        ).getDate();
+
+
+    for (let day = 1; day <= numberOfDays; day++) {
+
+        const date =
+            document.createElement("div");
+
+        date.className =
+            "calendar-date";
+
+        date.textContent =
+            day;
+
+
+        /* Highlight today's date */
+
+        if (day === currentDay) {
+
+            date.classList.add("today");
 
         }
 
 
-        document.getElementById("greeting").textContent = greeting;
+        calendar.appendChild(date);
+
+    }
+
+}
 
 
-        const dateOptions = {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric"
-        };
-
-
-        document.getElementById("currentDate").textContent =
-            today.toLocaleDateString("en-IN", dateOptions);
+generateCalendar();
 
 
 
-        /* 
-           DYNAMIC CALENDAR
-        */
+/* 
+   TIMETABLE UPLOAD
+ */
 
-        const calendar = document.getElementById("calendar");
+function uploadTimetable() {
 
-        const calendarTitle = document.getElementById("calendarTitle");
+    const input =
+        document.getElementById("timetableInput");
 
+    if (input.files.length > 0) {
 
-        const currentYear = today.getFullYear();
+        const file =
+            input.files[0];
 
-        const currentMonth = today.getMonth();
+        alert(
+            "Timetable uploaded successfully! 📅\n\n" +
+            "File: " + file.name +
+            "\n\nAI timetable processing will be connected next."
+        );
 
-        const currentDay = today.getDate();
+    }
 
-
-        const monthOptions = {
-            month: "long",
-            year: "numeric"
-        };
-
-
-        calendarTitle.textContent =
-            "📅 " + today.toLocaleDateString("en-IN", monthOptions);
-
-
-        const daysOfWeek = [
-            "Mon",
-            "Tue",
-            "Wed",
-            "Thu",
-            "Fri",
-            "Sat",
-            "Sun"
-        ];
+}
 
 
-        /* Add day names */
 
-        daysOfWeek.forEach(function(day) {
+/* 
+   CHATBOX
+ */
 
-            const dayElement = document.createElement("div");
+function sendMessage() {
 
-            dayElement.textContent = day;
+    const input =
+        document.getElementById("chatInput");
 
-            dayElement.classList.add("day-name");
+    const response =
+        document.getElementById("chatResponse");
 
-            calendar.appendChild(dayElement);
-
-        });
-
-
-        /*
-           JavaScript starts Sunday as 0.
-           We convert it so Monday = 0.
-        */
-
-        const firstDay =
-            new Date(currentYear, currentMonth, 1).getDay();
-
-        const startingDay =
-            firstDay === 0 ? 6 : firstDay - 1;
+    const message =
+        input.value.trim();
 
 
-        /* Add blank spaces before first date */
+    if (message === "") {
 
-        for (let i = 0; i < startingDay; i++) {
+        return;
 
-            const blank = document.createElement("div");
+    }
 
-            calendar.appendChild(blank);
+
+    response.style.display = "block";
+
+
+    /*
+       Temporary demo responses.
+       Later your AI backend/API can replace this.
+    */
+
+    const lower =
+        message.toLowerCase();
+
+
+    if (lower.includes("timetable") ||
+        lower.includes("class")) {
+
+        response.textContent =
+            "Your timetable will appear here once you upload it. 📅";
+
+    }
+
+    else if (lower.includes("event")) {
+
+        response.textContent =
+            "Campus events and important announcements will be shown in your notice feed. 🎉";
+
+    }
+
+    else if (lower.includes("deadline")) {
+
+        response.textContent =
+            "Your upcoming deadlines will appear on the calendar and dashboard. ⏰";
+
+    }
+
+    else {
+
+        response.textContent =
+            "I'm Campus Buddy! I can help you find campus information, events, classes and deadlines. 🤝";
+
+    }
+
+
+    input.value = "";
+
+}
+
+
+
+/* Press Enter to chat */
+
+document
+    .getElementById("chatInput")
+    .addEventListener("keypress", function(event) {
+
+        if (event.key === "Enter") {
+
+            sendMessage();
 
         }
 
-
-        /* Find number of days in current month */
-
-        const daysInMonth =
-            new Date(currentYear, currentMonth + 1, 0).getDate();
-
-
-        /* Add dates */
-
-        for (let day = 1; day <= daysInMonth; day++) {
-
-            const dateElement = document.createElement("div");
-
-            dateElement.textContent = day;
-
-
-            /* Highlight today's date */
-
-            if (day === currentDay) {
-
-                dateElement.classList.add("today");
-
-            }
-
-
-            calendar.appendChild(dateElement);
-
-        }
+    });
 
 
 
-        /* 
-           TIMETABLE UPLOAD - TEMPORARY
-       */
+/* 
+   NOTICE BUTTON
+ */
 
-        const timetableFile =
-            document.getElementById("timetableFile");
+function analyzeNotice() {
+
+    alert(
+        "Notice Analyzer 📄\n\n" +
+        "Upload a campus notice here.\n\n" +
+        "The AI will later extract important dates, " +
+        "deadlines, events and information relevant to you."
+    );
+
+}
 
 
-        timetableFile.addEventListener("change", function() {
 
-            if (this.files.length > 0) {
+/* 
+   MAP DEMO
+*/
 
-                const fileName = this.files[0].name;
+function startRoute() {
 
-                alert(
-                    "Timetable uploaded: " +
-                    fileName +
-                    "\n\nAI timetable processing will be added next!"
-                );
+    alert(
+        "Campus navigation 🚶\n\n" +
+        "Route navigation will be connected to the actual campus map in the next phase."
+    );
 
-            }
+}
 
-        });
-
-    </script>
-
+</script>
 
 </body>
-
 </html>
