@@ -767,75 +767,108 @@
 
     <!-- ================= JAVASCRIPT ================= -->
 
-    <script>
+    <script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+    getAuth,
+    signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+import { firebaseConfig } from "./firebase-config.js";
 
 
-        /* Temporary demo login */
+const app = initializeApp(firebaseConfig);
 
-        document
-            .getElementById("loginForm")
-            .addEventListener("submit", function(event) {
-
-                event.preventDefault();
+const auth = getAuth(app);
 
 
-                const studentId =
-                    document.getElementById("studentId").value;
+document
+    .getElementById("loginForm")
+    .addEventListener("submit", async function(event) {
 
-                const password =
-                    document.getElementById("password").value;
+        event.preventDefault();
 
+        const email =
+            document.getElementById("studentId").value.trim();
 
-                const message =
-                    document.getElementById("message");
+        const password =
+            document.getElementById("password").value;
 
-
-                if (studentId === "" || password === "") {
-
-                    message.style.display = "block";
-
-                    message.textContent =
-                        "Please enter your Student ID and password.";
-
-                    return;
-
-                }
+        const message =
+            document.getElementById("message");
 
 
-                /*
-                   TEMPORARY DEMO LOGIN
+        if (email === "" || password === "") {
 
-                   Firebase authentication
-                   will replace this later.
-                */
+            message.style.display = "block";
 
-                message.style.display = "block";
+            message.textContent =
+                "Please enter your email and password.";
 
-                message.textContent =
-                    "Demo login successful! Firebase authentication will be connected next.";
-
-            });
-
-
-
-        function forgotPassword() {
-
-            alert(
-                "Password recovery will be connected with Firebase Authentication."
-            );
-
+            return;
         }
 
 
+        try {
 
-       function signUp() {
-    window.location.href = "signup.html";
+            await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+            // Login successful
+            window.location.href = "dashboard.html";
+
+        }
+
+        catch (error) {
+
+            message.style.display = "block";
+
+            if (error.code === "auth/invalid-credential") {
+
+                message.textContent =
+                    "Incorrect email or password.";
+
+            } else if (error.code === "auth/user-not-found") {
+
+                message.textContent =
+                    "No account found with this email.";
+
+            } else {
+
+                message.textContent =
+                    "Login failed. Please try again.";
+
+                console.error(error);
+
+            }
+
+        }
+
+    });
+
+
+function forgotPassword() {
+
+    alert(
+        "Password recovery will be connected with Firebase Authentication."
+    );
+
 }
 
-        
 
+function signUp() {
 
-    </script>
+    window.location.href = "signup.html";
+
+}
+
+</script>
+
 
 
 </body>
