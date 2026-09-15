@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Campus Buddy | Login</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            background: #f5f1e9;
+
+            color: #07352e;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 25px;
+
+        }
+
+
+        /* ================= MAIN CONTAINER ================= */
+
+        .login-container {
+
+            width: 100%;
+
+            max-width: 1050px;
+
+            min-height: 620px;
+
+            background: #fffdf9;
+
+            border-radius: 32px;
+
+            overflow: hidden;
+
+            display: grid;
+
+            grid-template-columns: 1.1fr 0.9fr;
+
+            box-shadow:
+                0 20px 60px rgba(7, 53, 46, 0.12);
+
+        }
+
+
+        /* ================= LEFT SIDE ================= */
+
+        .welcome-section {
+
+            background: #07352e;
+
+            color: white;
+
+            padding: 55px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: space-between;
+
+            position: relative;
+
+            overflow: hidden;
+
+        }
+
+
+        .welcome-section::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 420px;
+
+            height: 420px;
+
+            border: 1px solid #42766a;
+
+            border-radius: 50%;
+
+            right: -180px;
+
+            bottom: -150px;
+
+        }
+
+
+        .welcome-section::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 250px;
+
+            height: 250px;
+
+            border: 1px solid #315f56;
+
+            border-radius: 50%;
+
+            right: 80px;
+
+            bottom: -100px;
+
+        }
+
+
+        /* ================= LOGO ================= */
+
+        .logo {
+
+            font-size: 27px;
+
+            font-weight: 800;
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+
+        .tagline {
+
+            font-size: 11px;
+
+            letter-spacing: 2px;
+
+            color: #b8d4c8;
+
+            margin-top: 6px;
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+
+        /* ================= WELCOME TEXT ================= */
+
+        .welcome-text {
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+
+        .welcome-label {
+
+            color: #a8ff4f;
+
+            font-size: 12px;
+
+            letter-spacing: 2px;
+
+            font-weight: bold;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .welcome-text h1 {
+
+            font-size: 55px;
+
+            line-height: 0.98;
+
+            letter-spacing: -2px;
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .welcome-text h1 span {
+
+            font-family: Georgia, serif;
+
+            font-style: italic;
+
+        }
+
+
+        .welcome-text p {
+
+            color: #c1d5ce;
+
+            line-height: 1.7;
+
+            max-width: 470px;
+
+            font-size: 15px;
+
+        }
+
+
+        /* ================= FEATURES ================= */
+
+        .features {
+
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+
+        .feature {
+
+            border: 1px solid #326258;
+
+            border-radius: 50px;
+
+            padding: 10px 15px;
+
+            color: #d4e4df;
+
+            font-size: 12px;
+
+        }
+
+
+        /* ================= RIGHT SIDE ================= */
+
+        .login-section {
+
+            padding: 55px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+        }
+
+
+        .login-heading {
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .small-heading {
+
+            color: #6d817a;
+
+            font-size: 11px;
+
+            letter-spacing: 2px;
+
+            font-weight: bold;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .login-heading h2 {
+
+            font-size: 36px;
+
+            letter-spacing: -1px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .login-heading p {
+
+            color: #73827d;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+        }
+
+
+        /* ================= FORM ================= */
+
+        .form-group {
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .form-group input {
+
+            width: 100%;
+
+            padding: 15px;
+
+            border: 1px solid #d8d4cc;
+
+            border-radius: 12px;
+
+            background: #faf8f3;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition: 0.2s;
+
+        }
+
+
+        .form-group input:focus {
+
+            border-color: #07352e;
+
+            background: white;
+
+        }
+
+
+        /* ================= OPTIONS ================= */
+
+        .login-options {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+
+            font-size: 12px;
+
+        }
+
+
+        .remember {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            color: #667771;
+
+        }
+
+
+        .forgot {
+
+            color: #07352e;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+
+        /* ================= LOGIN BUTTON ================= */
+
+        .login-button {
+
+            width: 100%;
+
+            padding: 15px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background: #07352e;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        .login-button:hover {
+
+            background: #17483f;
+
+            transform: translateY(-1px);
+
+        }
+
+
+        /* ================= SIGN UP ================= */
+
+        .signup {
+
+            text-align: center;
+
+            margin-top: 22px;
+
+            color: #73827d;
+
+            font-size: 13px;
+
+        }
+
+
+        .signup span {
+
+            color: #07352e;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+
+        /* ================= DEMO MESSAGE ================= */
+
+        .message {
+
+            margin-top: 18px;
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            background: #edf7e7;
+
+            color: #315a48;
+
+            font-size: 12px;
+
+            display: none;
+
+            line-height: 1.5;
+
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media(max-width: 800px) {
+
+            .login-container {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .welcome-section {
+
+                min-height: 420px;
+
+                padding: 40px;
+
+            }
+
+
+            .login-section {
+
+                padding: 40px;
+
+            }
+
+
+            .welcome-text h1 {
+
+                font-size: 43px;
+
+            }
+
+        }
+
+
+        @media(max-width: 500px) {
+
+            body {
+
+                padding: 12px;
+
+            }
+
+
+            .login-container {
+
+                border-radius: 22px;
+
+            }
+
+
+            .welcome-section,
+
+            .login-section {
+
+                padding: 30px;
+
+            }
+
+
+            .welcome-text h1 {
+
+                font-size: 38px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="login-container">
+
+
+        <!-- ================= LEFT ================= -->
+
+        <section class="welcome-section">
+
+
+            <div>
+
+                <div class="logo">
+                    ✦ Campus Buddy
+                </div>
+
+                <div class="tagline">
+                    YOUR CAMPUS, IN SYNC
+                </div>
+
+            </div>
+
+
+            <div class="welcome-text">
+
+                <div class="welcome-label">
+                    WELCOME BACK
+                </div>
+
+                <h1>
+                    Your campus,
+                    <span>simplified.</span>
+                </h1>
+
+                <p>
+                    One place for your timetable,
+                    important notices, deadlines,
+                    events and everything else
+                    happening around campus.
+                </p>
+
+            </div>
+
+
+            <div class="features">
+
+                <div class="feature">
+                    📅 Timetable
+                </div>
+
+                <div class="feature">
+                    📢 Notices
+                </div>
+
+                <div class="feature">
+                    🤖 AI Assistant
+                </div>
+
+                <div class="feature">
+                    ⏰ Deadlines
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ================= RIGHT ================= -->
+
+        <section class="login-section">
+
+
+            <div class="login-heading">
+
+                <div class="small-heading">
+                    STUDENT PORTAL
+                </div>
+
+                <h2>
+                    Welcome back 👋
+                </h2>
+
+                <p>
+                    Log in to access your personalised
+                    Campus Buddy dashboard.
+                </p>
+
+            </div>
+
+
+
+            <!-- LOGIN FORM -->
+
+            <form id="loginForm">
+
+
+                <div class="form-group">
+
+                    <label for="studentId">
+                        Student ID / Email
+                    </label>
+
+                    <input
+                        type="text"
+                        id="studentId"
+                        placeholder="Enter your student ID or email"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="login-options">
+
+                    <label class="remember">
+
+                        <input
+                            type="checkbox"
+                            id="rememberMe"
+                        >
+
+                        Remember me
+
+                    </label>
+
+
+                    <span
+                        class="forgot"
+                        onclick="forgotPassword()">
+
+                        Forgot password?
+
+                    </span>
+
+                </div>
+
+
+
+                <button
+                    type="submit"
+                    class="login-button">
+
+                    Login to Campus Buddy →
+
+                </button>
+
+
+                <div
+                    class="message"
+                    id="message">
+
+                </div>
+
+
+            </form>
+
+
+
+            <div class="signup">
+
+                New to Campus Buddy?
+
+                <span onclick="signUp()">
+                    Create an account
+                </span>
+
+            </div>
+
+
+        </section>
+
+
+    </div>
+
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+
+        /* Temporary demo login */
+
+        document
+            .getElementById("loginForm")
+            .addEventListener("submit", function(event) {
+
+                event.preventDefault();
+
+
+                const studentId =
+                    document.getElementById("studentId").value;
+
+                const password =
+                    document.getElementById("password").value;
+
+
+                const message =
+                    document.getElementById("message");
+
+
+                if (studentId === "" || password === "") {
+
+                    message.style.display = "block";
+
+                    message.textContent =
+                        "Please enter your Student ID and password.";
+
+                    return;
+
+                }
+
+
+                /*
+                   TEMPORARY DEMO LOGIN
+
+                   Firebase authentication
+                   will replace this later.
+                */
+
+                message.style.display = "block";
+
+                message.textContent =
+                    "Demo login successful! Firebase authentication will be connected next.";
+
+            });
+
+
+
+        function forgotPassword() {
+
+            alert(
+                "Password recovery will be connected with Firebase Authentication."
+            );
+
+        }
+
+
+
+        function signUp() {
+
+            alert(
+                "Student registration will be added with Firebase Authentication."
+            );
+
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>
