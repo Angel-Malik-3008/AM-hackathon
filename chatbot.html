@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Buddy — AI Campus Assistant</title>
+  
+  <!-- Fonts matching dashboard.html -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================
+       CSS STYLES (Exact classes & tokens from dashboard.html)
+       ========================================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f1e9;
+      color: #0b3029;
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ----------------------------------------------------------
+       1. SIDEBAR (Exact layout and styling from dashboard.html)
+       ---------------------------------------------------------- */
+    .sidebar {
+      width: 270px;
+      background: #07352e;
+      color: white;
+      min-height: 100vh;
+      padding: 28px 20px;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 50;
+    }
+
+    .logo {
+      font-size: 27px;
+      font-weight: 800;
+      margin-bottom: 5px;
+      cursor: pointer;
+    }
+
+    .logo a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .tagline {
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: #b8d4c8;
+      margin-bottom: 45px;
+    }
+
+    .nav-item {
+      padding: 15px 18px;
+      margin: 7px 0;
+      border-radius: 13px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #d6e5df;
+      transition: 0.2s;
+      text-decoration: none;
+      display: block;
+    }
+
+    .nav-item:hover {
+      background: #17483f;
+      color: #ffffff;
+    }
+
+    .nav-item.active {
+      background: #a8ff4f;
+      color: #07352e;
+    }
+
+    /* WhatsApp Upload Notice Box */
+    .notice-box {
+      position: absolute;
+      bottom: 100px;
+      left: 20px;
+      right: 20px;
+      background: #17483f;
+      padding: 18px;
+      border-radius: 16px;
+      border: 1px solid #326359;
+    }
+
+    .notice-box p {
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 12px;
+      color: #ffffff;
+    }
+
+    .green-button {
+      width: 100%;
+      padding: 11px;
+      border: none;
+      border-radius: 10px;
+      background: #a8ff4f;
+      color: #07352e;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+      display: block;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .green-button:hover {
+      background: #96ee3d;
+      transform: translateY(-1px);
+    }
+
+    /* Student Profile Footer */
+    .profile {
+      position: absolute;
+      bottom: 25px;
+      left: 25px;
+      font-size: 13px;
+      color: #ffffff;
+      line-height: 1.35;
+    }
+
+    .profile span {
+      color: #a8c4bb;
+      font-size: 12px;
+    }
+
+    /* ----------------------------------------------------------
+       2. MAIN ASSISTANT AREA
+       ---------------------------------------------------------- */
+    .main {
+      margin-left: 270px;
+      padding: 30px 40px 24px 40px;
+      width: calc(100% - 270px);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header Bar */
+    .top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(7, 53, 46, 0.08);
+      flex-shrink: 0;
+    }
+
+    .small-heading {
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: #648078;
+      text-transform: uppercase;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    h1 {
+      font-size: 38px;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      color: #07352e;
+    }
+
+    h1 span {
+      font-style: italic;
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .context-tag {
+      background: #e9e3d8;
+      color: #07352e;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: #27ae60;
+      border-radius: 50%;
+    }
+
+    .btn-clear {
+      background: transparent;
+      border: 1px solid #c7bfb1;
+      color: #648078;
+      padding: 7px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-clear:hover {
+      background: #e9e3d8;
+      color: #07352e;
+    }
+
+    .btn-back {
+      background: #07352e;
+      color: white;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    .btn-back:hover {
+      background: #17483f;
+    }
+
+    /* ----------------------------------------------------------
+       3. CHAT SCROLL AREA
+       ---------------------------------------------------------- */
+    .chat-scroll-container {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      scroll-behavior: smooth;
+    }
+
+    /* Welcome Hero Card */
+    .welcome-card {
+      background: #07352e;
+      color: white;
+      border-radius: 22px;
+      padding: 24px 28px;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 6px 20px rgba(7, 53, 46, 0.08);
+    }
+
+    .welcome-card::after {
+      content: "";
+      position: absolute;
+      right: -30px;
+      bottom: -40px;
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      border: 1px solid rgba(168, 255, 79, 0.2);
+      pointer-events: none;
+    }
+
+    .welcome-tag {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: bold;
+      color: #a8ff4f;
+      margin-bottom: 8px;
+    }
+
+    .welcome-card h2 {
+      font-size: 24px;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+      font-family: Arial, sans-serif;
+    }
+
+    .welcome-card p {
+      font-size: 14px;
+      line-height: 1.5;
+      color: #b8d4c8;
+      max-width: 620px;
+    }
+
+    /* Quick Suggested Chips */
+    .chips-section {
+      margin-top: 4px;
+      margin-bottom: 4px;
+      flex-shrink: 0;
+    }
+
+    .chips-label {
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #648078;
+      margin-bottom: 8px;
+    }
+
+    .chips-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip-btn {
+      background: white;
+      border: 1px solid #d5cfc4;
+      color: #07352e;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .chip-btn:hover {
+      background: #a8ff4f;
+      border-color: #a8ff4f;
+      transform: translateY(-1px);
+    }
+
+    /* Message Bubbles */
+    .message-row {
+      display: flex;
+      gap: 12px;
+      max-width: 80%;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .message-row.user {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+
+    .message-row.user .message-bubble {
+      background: #07352e;
+      color: white;
+      border-radius: 18px 18px 4px 18px;
+      padding: 13px 18px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .message-row.assistant {
+      align-self: flex-start;
+    }
+
+    .ai-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #a8ff4f;
+      color: #07352e;
+      font-weight: 800;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .assistant .message-content-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .ai-meta {
+      font-size: 11px;
+      color: #648078;
+      font-weight: bold;
+    }
+
+    .message-row.assistant .message-bubble {
+      background: white;
+      color: #1c332c;
+      border: 1px solid #dfd8cb;
+      border-radius: 4px 18px 18px 18px;
+      padding: 16px 20px;
+      font-size: 14px;
+      line-height: 1.55;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+
+    .message-bubble p {
+      margin-bottom: 8px;
+    }
+
+    .message-bubble p:last-child {
+      margin-bottom: 0;
+    }
+
+    .message-bubble ul, .message-bubble ol {
+      margin: 6px 0 8px 18px;
+    }
+
+    .message-bubble li {
+      margin-bottom: 3px;
+    }
+
+    .message-bubble strong {
+      color: #07352e;
+    }
+
+    /* Typing Dots */
+    .typing-row {
+      display: none;
+      align-self: flex-start;
+      gap: 12px;
+    }
+
+    .typing-bubble {
+      background: white;
+      border: 1px solid #dfd8cb;
+      border-radius: 4px 18px 18px 18px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .typing-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #07352e;
+      opacity: 0.35;
+      animation: pulse 1.3s infinite ease-in-out;
+    }
+
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.25; transform: scale(0.85); }
+      50% { opacity: 1; transform: scale(1.15); background: #a8ff4f; }
+    }
+
+    /* Error Banner */
+    .error-card {
+      background: #fff1f0;
+      border: 1px solid #ffccc7;
+      color: #cf1322;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 6px 0;
+    }
+
+    .error-card .retry-btn {
+      margin-left: auto;
+      background: #cf1322;
+      color: white;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    /* ----------------------------------------------------------
+       4. CHAT INPUT AT BOTTOM
+       ---------------------------------------------------------- */
+    .chat-input-area {
+      flex-shrink: 0;
+      margin-top: 14px;
+    }
+
+    .chat-input-wrapper {
+      background: white;
+      border: 1px solid #d5cfc4;
+      border-radius: 28px;
+      padding: 6px 8px 6px 20px;
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      box-shadow: 0 4px 16px rgba(7, 53, 46, 0.05);
+    }
+
+    .chat-input-wrapper:focus-within {
+      border-color: #07352e;
+      box-shadow: 0 4px 20px rgba(7, 53, 46, 0.1);
+    }
+
+    .chat-textarea {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      resize: none;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      line-height: 1.45;
+      color: #07352e;
+      padding: 10px 0;
+      max-height: 130px;
+      min-height: 22px;
+    }
+
+    .chat-textarea::placeholder {
+      color: #8c9f98;
+    }
+
+    .btn-send {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #07352e;
+      color: white;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s;
+      flex-shrink: 0;
+      margin-bottom: 2px;
+    }
+
+    .btn-send:hover:not(:disabled) {
+      background: #a8ff4f;
+      color: #07352e;
+      transform: scale(1.05);
+    }
+
+    .btn-send:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .input-hint {
+      font-size: 11px;
+      color: #648078;
+      text-align: center;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================
+       SIDEBAR: Exact match to dashboard.html
+       (No extra 'Campus Buddy' link in this menu)
+       ========================================================== -->
+  <aside class="sidebar">
+
+    <div class="logo">
+      <a href="dashboard.html">✦ Campus Buddy</a>
+    </div>
+
+    <div class="tagline">
+      YOUR CAMPUS, IN SYNC
+    </div>
+
+    <a href="dashboard.html" class="nav-item">
+      ◇ &nbsp; Today
+    </a>
+
+    <a href="dashboard.html#notices" class="nav-item">
+      ▣ &nbsp; Notice Feed
+    </a>
+
+    <a href="dashboard.html#calendar" class="nav-item">
+      □ &nbsp; Calendar
+    </a>
+
+    <a href="dashboard.html#map" class="nav-item">
+      ⌖ &nbsp; Campus Map
+    </a>
+
+    <a href="dashboard.html#preferences" class="nav-item">
+      ◎ &nbsp; My Preferences
+    </a>
+
+    <div class="notice-box">
+      <p>
+        Have a notice from WhatsApp?
+        Upload it here and let Campus Buddy
+        make it useful.
+      </p>
+      <a href="dashboard.html#upload" class="green-button">
+        + Analyze a notice
+      </a>
+    </div>
+
+    <div class="profile">
+      👤 <span id="sidebarUserName">Student</span>
+      <br>
+      <span id="sidebarUserMeta">Campus Buddy User</span>
+    </div>
+
+  </aside>
+
+  <!-- ==========================================================
+       MAIN CHATBOT AREA
+       ========================================================== -->
+  <main class="main">
+
+    <!-- Top Header -->
+    <header class="top-header">
+      <div>
+        <div class="small-heading">Campus Companion</div>
+        <h1>Ask <span>Campus Buddy</span></h1>
+      </div>
+
+      <div class="header-actions">
+        <div class="context-tag" id="studentContextTag">
+          <span class="status-dot"></span>
+          <span id="studentContextText">Student Active</span>
+        </div>
+
+        <button class="btn-clear" id="clearChatBtn" title="Reset conversation">
+          Clear chat
+        </button>
+
+        <a href="dashboard.html" class="btn-back">
+          ← Dashboard
+        </a>
+      </div>
+    </header>
+
+    <!-- Chat Messages Scroll Area -->
+    <section class="chat-scroll-container" id="chatContainer">
+
+      <!-- Welcome Banner -->
+      <div class="welcome-card" id="welcomeCard">
+        <div class="welcome-tag">✦ AI CAMPUS ASSISTANT</div>
+        <h2>Hi! I'm Campus Buddy.</h2>
+        <p>Ask me anything about your campus — upcoming deadlines, club recruitment, timetable queries, hackathons, or scholarship opportunities. I draw from your college notices to keep you in sync.</p>
+      </div>
+
+      <!-- Quick Suggestion Prompt Chips -->
+      <div class="chips-section" id="chipsSection">
+        <div class="chips-label">Suggested questions to get started</div>
+        <div class="chips-container">
+          <button class="chip-btn" data-prompt="What's happening this week?">What's happening this week?</button>
+          <button class="chip-btn" data-prompt="Show my upcoming deadlines">Show my upcoming deadlines</button>
+          <button class="chip-btn" data-prompt="Any hackathons or competitions?">Any hackathons?</button>
+          <button class="chip-btn" data-prompt="What classes do I have today?">What classes do I have today?</button>
+          <button class="chip-btn" data-prompt="Any scholarships or internships for me?">Any scholarships for me?</button>
+          <button class="chip-btn" data-prompt="Where can I find the central library?">Where can I find the library?</button>
+        </div>
+      </div>
+
+      <!-- Live Messages will be injected here via chatbot.js -->
+
+      <!-- Typing Indicator -->
+      <div class="typing-row" id="typingIndicator">
+        <div class="ai-avatar">✦</div>
+        <div class="typing-bubble">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Chat Input Area -->
+    <footer class="chat-input-area">
+      <div class="chat-input-wrapper">
+        <textarea 
+          id="chatInput" 
+          class="chat-textarea" 
+          placeholder="Ask Campus Buddy anything about your campus..." 
+          rows="1"
+          aria-label="Ask Campus Buddy"
+        ></textarea>
+        
+        <button id="sendBtn" class="btn-send" aria-label="Send message" title="Send message">
+          <!-- Arrow Icon -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </div>
+      <div class="input-hint">Press <strong>Enter</strong> to send &bull; <strong>Shift + Enter</strong> for a new line</div>
+    </footer>
+
+  </main>
+
+  <!-- Scripts -->
+  <script src="firebase-config.js"></script>
+  <script src="ai-service.js"></script>
+  <script src="chatbot.js"></script>
+
+</body>
+</html>
